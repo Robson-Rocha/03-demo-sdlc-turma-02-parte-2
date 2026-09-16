@@ -16,7 +16,9 @@ public sealed class TrainingCreationTests
             "Fundamentos de C#",
             "Introdução ao C#",
             "2026-09-15",
-            8);
+            8,
+            2,
+            4);
 
         var firstResponse = await client.PostAsJsonAsync("/api/trainings", request);
         var secondResponse = await client.PostAsJsonAsync(

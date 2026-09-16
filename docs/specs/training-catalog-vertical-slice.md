@@ -4,7 +4,7 @@
 
 - Status: aprovado
 - Responsáveis: turma e instrutor
-- Última revisão: preencher ao versionar
+- Última revisão: 2026-09-16
 
 ## Objetivo
 
@@ -39,13 +39,20 @@ Operações adicionais de API podem ser implementadas depois com contratos expl�
 | `description` | texto | obrigatório e não vazio |
 | `startDate` | data no formato `YYYY-MM-DD` | obrigatória e exclusiva no catálogo |
 | `durationHours` | inteiro | obrigatório e maior que zero |
+| `lessonCount` | inteiro | obrigatório e maior que zero |
+| `lessonDurationHours` | inteiro | obrigatório, maior que zero e menor ou igual a quatro |
+
+A carga horária total (`durationHours`) pode ser superior a quatro. A soma das
+cargas das aulas (`lessonCount × lessonDurationHours`) não pode exceder a carga
+horária total do treinamento.
 
 ## Contrato da API para criação
 
 ### Requisição
 
 - Método e rota: `POST /api/trainings`
-- Corpo: título, descrição, data de início e carga horária
+- Corpo: título, descrição, data de início, carga horária, quantidade de aulas e
+  duração uniforme de cada aula
 
 ### Sucesso
 
