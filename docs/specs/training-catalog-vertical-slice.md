@@ -4,7 +4,7 @@
 
 - Status: aprovado
 - Responsáveis: turma e instrutor
-- Última revisão: preencher ao versionar
+- Última revisão: 2026-09-16
 
 ## Objetivo
 
@@ -39,13 +39,20 @@ Operações adicionais de API podem ser implementadas depois com contratos expl�
 | `description` | texto | obrigatório e não vazio |
 | `startDate` | data no formato `YYYY-MM-DD` | obrigatória e exclusiva no catálogo |
 | `durationHours` | inteiro | obrigatório e maior que zero |
+| `lessonCount` | inteiro | obrigatório e maior que zero |
+| `lessonDurationHours` | inteiro | obrigatório, maior que zero e menor ou igual a quatro |
+
+A carga horária total (`durationHours`) pode ser superior a quatro. A soma das
+cargas das aulas (`lessonCount × lessonDurationHours`) não pode exceder a carga
+horária total do treinamento.
 
 ## Contrato da API para criação
 
 ### Requisição
 
 - Método e rota: `POST /api/trainings`
-- Corpo: título, descrição, data de início e carga horária
+- Corpo: título, descrição, data de início, carga horária, quantidade de aulas e
+  duração uniforme de cada aula
 
 ### Sucesso
 
@@ -97,6 +104,9 @@ Operações adicionais de API podem ser implementadas depois com contratos expl�
 6. Pela interface, dados válidos produzem confirmação e o novo item aparece na lista.
 7. Pela interface, uma falha preserva os dados preenchidos e apresenta mensagem útil.
 8. Dado um treinamento já cadastrado para uma data de início, quando outro treinamento for enviado com a mesma `startDate`, então a API retorna `409` e identifica o campo `startDate`, sem armazenar o segundo treinamento.
+9. Uma carga horária total de oito horas com duas aulas de quatro horas é aceita.
+10. Uma quantidade ou duração de aula inválida, uma duração de aula superior a quatro horas ou uma carga de aulas superior à carga total retorna `400`.
+11. Os campos de quantidade e duração das aulas são aceitos na criação e edição e aparecem nas consultas do treinamento.
 
 ## Evidências esperadas
 
