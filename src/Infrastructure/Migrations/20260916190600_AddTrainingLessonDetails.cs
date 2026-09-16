@@ -21,6 +21,15 @@ public partial class AddTrainingLessonDetails : Migration
             type: "INTEGER",
             nullable: false,
             defaultValue: 0);
+
+        migrationBuilder.Sql("""
+            UPDATE Trainings
+            SET LessonCount = 1,
+                LessonDurationHours = CASE
+                    WHEN DurationHours > 4 THEN 4
+                    ELSE DurationHours
+                END;
+            """);
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)

@@ -104,6 +104,9 @@ horária total do treinamento.
 6. Pela interface, dados válidos produzem confirmação e o novo item aparece na lista.
 7. Pela interface, uma falha preserva os dados preenchidos e apresenta mensagem útil.
 8. Dado um treinamento já cadastrado para uma data de início, quando outro treinamento for enviado com a mesma `startDate`, então a API retorna `409` e identifica o campo `startDate`, sem armazenar o segundo treinamento.
+9. Uma carga horária total de oito horas com duas aulas de quatro horas é aceita.
+10. Uma quantidade ou duração de aula inválida, uma duração de aula superior a quatro horas ou uma carga de aulas superior à carga total retorna `400`.
+11. Os campos de quantidade e duração das aulas são aceitos na criação e edição e aparecem nas consultas do treinamento.
 
 ## Evidências esperadas
 
