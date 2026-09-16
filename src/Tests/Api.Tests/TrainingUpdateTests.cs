@@ -49,6 +49,25 @@ public sealed class TrainingUpdateTests
         Assert.True(error.RootElement.GetProperty("errors").TryGetProperty("title", out _));
     }
 
+    [Theory]
+    [InlineData(0, 4, "lessonCount")]
+    [InlineData(2, 0, "lessonDurationHours")]
+    [InlineData(2, 5, "lessonDurationHours")]
+    [InlineData(3, 4, "lessonDurationHours")]
+    public async Task ReturnsBadRequestWhenLessonDetailsAreInvalid(int lessonCount, int lessonDurationHours, string expectedErrorField)
+    {
+        using var factory = new TrainingCatalogApiFactory();
+        using var client = factory.CreateClient();
+        var createdTraining = await CreateTraining(client, "2026-09-15");
+        var request = new CreateTrainingRequest("C# Avançado", "Tópicos avançados de C#", "2026-09-16", 8, lessonCount, lessonDurationHours);
+
+        var response = await client.PutAsJsonAsync($"/api/trainings/{createdTraining.Id}", request);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        using var error = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.True(error.RootElement.GetProperty("errors").TryGetProperty(expectedErrorField, out _));
+    }
+
     [Fact]
     public async Task ReturnsNotFoundWhenIdentifierDoesNotExist()
     {
